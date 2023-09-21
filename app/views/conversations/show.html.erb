@@ -1,0 +1,5 @@
+<div>
+  <%=render 'conversation',conversation: @conversation %>
+  <%=link_to 'edit',edit_user_conversation_path(@user2,@conversation) ,class: 'btn btn-primary' %>
+  <%= link_to 'Back',user_conversations_path ,class: 'btn btn-primary'%>
+</div>

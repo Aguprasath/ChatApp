@@ -1,0 +1,10 @@
+<h1>Conversations</h1>
+<div class="container-fluid"><br>
+  <%@conversations.each do |conversation| %>
+    <%=render conversation %>
+    <%=link_to ' show conversation ',user_conversation_path(@user2,conversation),class:'btn btn-primary' %><br><br>
+  <% end %>
+
+</div><br>
+<%=link_to 'New conversation',new_user_conversation_path,class:'btn btn-primary' %>|
+<%= link_to 'Back',root_path,class:'btn btn-primary' %>

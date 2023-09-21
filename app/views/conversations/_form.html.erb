@@ -1,0 +1,11 @@
+<%= form_with(model: [@user2,@conversation]) do |form| %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div><br>
+  <div >
+    <%= form.submit%>
+  </div>
+
+<%end %>
