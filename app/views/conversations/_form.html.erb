@@ -1,11 +1,13 @@
-<%= form_with(model: [@user2,@conversation]) do |form| %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+<%= form_with(model: [@user2, @conversation], class: "form") do |form| %>
+
+  <div class="form-group">
+    <%= form.label :title, class: "control-label" %><br>
+    <%= form.text_field :title, class: "form-control" %>
   </div><br>
-  <div >
-    <%= form.submit%>
-  </div>
 
-<%end %>
+  <div class="form-group text-center">
+    <%= form.submit "Create", class: "btn btn-primary" %>
+  </div>
+<br>
+<% end %>

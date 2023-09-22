@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <h5>Messages</h5>
+  <%if @messages.size==0 %>
+    <%='you are the first one to start conversation' %>
+    <%else %>
+
+    <%= turbo_stream_from "messages_list" %>
+       <turbo_frame id="messages_list">
+        <%@messages.each do |message| %>
+          <%=turbo_frame_tag message do%>
+            <%=render message %>
+
+           <%end %>
+        <% end %>
+       </turbo_frame>
+
+    <%end %>
+  <%#= turbo_frame_tag "message-new" do%>
+<!--    <div ><br>-->
+      <%=render 'form' %>
+    </div>
+  <%#end %>
+
+<br>
+  <%=link_to 'Back',user_conversations_path %>
+</div>

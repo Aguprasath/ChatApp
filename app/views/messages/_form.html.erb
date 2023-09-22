@@ -1,0 +1,8 @@
+<%= form_with(model: [@user2, @conversation,@message], class: "form") do |form| %>
+
+
+     <%= form.text_field :body,placeholder:"type your message here.."%>
+     <%= form.submit "send", class: "btn btn-primary" %>
+
+  <br>
+<% end %>

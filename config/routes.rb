@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   resources 'users' do
-    resources :conversations
+    resources :conversations do
+      resources :messages
+    end
   end
   root 'users#index'
 
