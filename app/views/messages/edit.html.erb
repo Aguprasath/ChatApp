@@ -1,3 +1,5 @@
-<%= turbo_frame_tag @message do %>
+<%= turbo_frame_tag dom_id(@message) do %>
+  <strong><%= "#{@message.user.username} :" %></strong>
   <%= render "form", message: @message %>
+
 <% end %>

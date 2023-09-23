@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
         format.turbo_stream
         #format.html redirect_to user_conversation_messages_path(@user2,@conversation)
       else
-        format.html render :new
+        format.turbo_stream
       end
     end
   end

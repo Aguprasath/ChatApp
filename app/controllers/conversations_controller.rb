@@ -17,12 +17,13 @@ class ConversationsController < ApplicationController
   def create
     @conversation=current_user.conversations_as_user1.create(conversation_params)
     @conversation.user2_id=@user2.id
-    if @conversation.save
-      redirect_to user_conversations_path
-    else
-      render :new
-    end
-  end
+
+      if @conversation.save
+          redirect_to user_conversations_path
+      else
+         render :new
+      end
+ end
 
   def update
 

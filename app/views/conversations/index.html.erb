@@ -1,10 +1,17 @@
 
 <div class="container-fluid"><br>
   <h5>Conversations</h5><br>
-  <%@conversations.each do |conversation| %>
-    <%=render conversation %><br>
-     <% end %><br>
+  <%=turbo_stream_from "conversations" %>
+  <div id="conversations">
+    <%@conversations.each do |conversation| %>
+      <%=render conversation ,locals={conversation: conversation,user2: @user2} %><br>
+    <% end %>
+  </div>
 
-  <%=link_to 'New conversation',new_user_conversation_path,class:'btn btn-primary' %>|
+
+    <%=link_to 'New conversation',new_user_conversation_path,class:'btn btn-primary' %>|
+
+
+
   <%= link_to 'Back',root_path,class:'btn btn-primary' %>
 </div><br>

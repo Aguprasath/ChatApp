@@ -1,21 +1,12 @@
+<div >
+  <%=turbo_frame_tag message do %>
+    <div>
 
-<%=turbo_frame_tag message do %>
-  <div>
-    <%if message.user_id==current_user.id %>
-      <strong>
-        <%="You :" %>
-      </strong>
+      <strong><%= "#{message.user.username} :"%></strong>
+      <%=message.body %>
+      <%=link_to 'edit',edit_user_conversation_message_path(message.user,message.conversation,message) %>
+      <%=link_to 'delete',user_conversation_message_path(message.user,message.conversation,message),method: :delete,form: { data: { turbo_frame: "_top" } } %>
 
-    <%else %>
-      <strong>
-        <%="#{@user2.username} :" %>
-      </strong>
-
-    <%end %>
-<!--    <strong><%#=message.user.username %></strong>-->
-    <%=message.body %>
-    <%=link_to 'edit',edit_user_conversation_message_path(message.user,message.conversation,message) %>
-    <%=link_to 'delete',user_conversation_message_path(message.user,message.conversation,message),method: :delete %>
-
-  </div>
-<%end %>
+    </div>
+  <%end %>
+</div>

@@ -2,11 +2,10 @@
 <%= form_with(model: [@user2, @conversation], class: "form") do |form| %>
 
   <div class="form-group">
-    <%= form.label :title, class: "control-label" %><br>
-    <%= form.text_field :title, class: "form-control" %>
+    <%= form.text_field :title, class: "form-control",placeholder:"Enter conversation title" %>
   </div><br>
 
-  <div class="form-group text-center">
+  <div class="form-group">
     <%= form.submit "Create", class: "btn btn-primary" %>
   </div>
 <br>
