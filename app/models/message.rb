@@ -2,6 +2,8 @@ class Message < ApplicationRecord
   belongs_to :user
   belongs_to :conversation
   validates :body,presence: true
-  broadcasts_to ->(messgae) { "messages" }, inserts_by: :append
+
+  after_update_commit -> { broadcast_replace_later_to "messages" }
+  after_destroy_commit -> { broadcast_remove_to "messages" }
 
 end

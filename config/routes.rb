@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
+
+  root 'users#index'
+
   devise_for :users
+
   resources 'users' do
-    resources :conversations do
+    resources :conversations, only: [:index, :new, :create] do
       resources :messages
     end
   end
-  root 'users#index'
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

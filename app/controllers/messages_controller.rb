@@ -1,6 +1,9 @@
 class MessagesController < ApplicationController
-  before_action :set_conversation,:set_user2
+  before_action :set_conversation
+  before_action :set_other_user
   before_action :set_message,only: %i[show edit update destroy]
+
+
   def index
     @messages=@conversation.messages.eager_load(:user).all
     @message=@conversation.messages.new
@@ -20,7 +23,10 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.turbo_stream
+        format.turbo_stream do
+          Turbo::Streams::ActionBroadcastJob.perform_later("messages",action: :append, target: "messages", partial: "messages/message",  locals: { message: @message })
+
+        end
         #format.html redirect_to user_conversation_messages_path(@user2,@conversation)
       else
         format.turbo_stream
@@ -31,7 +37,6 @@ class MessagesController < ApplicationController
     respond_to do |format|
       if  @message.update(message_params)
         format.turbo_stream
-        #format.html redirect_to user_conversation_messages_path(@user2,@conversation)
       else
         format.html render :edit
       end
@@ -42,8 +47,9 @@ class MessagesController < ApplicationController
     if @message.destroy
       respond_to do |format|
         format.turbo_stream
-        #format.html redirect_to user_conversation_messages_path
       end
+    else
+      redirect_to user_conversation_messages_path
     end
   end
   private
@@ -53,8 +59,8 @@ class MessagesController < ApplicationController
   def set_conversation
     @conversation=Conversation.find(params[:conversation_id])
   end
-  def set_user2
-    @user2=User.find(params[:user_id])
+  def set_other_user
+    @other_user=User.find(params[:user_id])
   end
   def set_message
     @message=Message.find(params[:id])

@@ -1,10 +1,14 @@
 
 <div class="container-fluid"><br>
   <h5>List of Users</h5>
-  <%@users.each do |user| %>
-    <%if current_user.id!=user.id %>
-      <%=render user %><br>
-      <%=link_to 'View Conversations',user_conversations_path(user),class: 'btn btn-primary' %><br><br>
-      <% end %>
-  <% end %>
+  <%=turbo_stream_from "users" %>
+  <div id="users">
+    <%@users.each do |user| %>
+      <%if current_user.id!=user.id %>
+        <%=render user %>
+       <br><br>
+      <%end %>
+    <% end %>
+  </div>
+
 </div>

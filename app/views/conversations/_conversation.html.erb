@@ -3,7 +3,8 @@
   <div>
     <strong> Conversation title : </strong>
     <%= conversation.title %>
-    <%=link_to 'show Messages',user_conversation_messages_path(user2,conversation),class:'btn btn-primary', data: { turbo_frame: "_top" } %><br>
+
+    <%=link_to 'show Messages',user_conversation_messages_path(user, conversation),class:'btn btn-primary', data: { turbo_frame: "_top" } %><br>
   </div>
 
 <%end %>

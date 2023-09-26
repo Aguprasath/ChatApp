@@ -4,14 +4,11 @@
   <%=turbo_stream_from "conversations" %>
   <div id="conversations">
     <%@conversations.each do |conversation| %>
-      <%=render conversation ,locals={conversation: conversation,user2: @user2} %><br>
+      <%=render conversation  ,locals={user: @other_user,conversation: conversation}%><br>
     <% end %>
   </div>
 
-
-    <%=link_to 'New conversation',new_user_conversation_path,class:'btn btn-primary' %>|
-
-
+  <%=link_to 'New conversation',new_user_conversation_path,class:'btn btn-primary' %>|
 
   <%= link_to 'Back',root_path,class:'btn btn-primary' %>
 </div><br>

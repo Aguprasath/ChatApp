@@ -1,6 +1,10 @@
-<div>
-  <strong>User Name :</strong>
-  <%= user.username %><br>
-  <strong> User Email :</strong>
-  <%=user.email %><br>
-</div>
+
+<%=turbo_frame_tag user do %>
+  <div>
+    <strong>User Name :</strong>
+    <%= user.username %><br>
+    <strong> User Email :</strong>
+    <%=user.email %><br><br>
+    <%=link_to 'View Conversations',user_conversations_path(user),class: 'btn btn-primary', data: { turbo_frame: "_top" } %>
+  </div>
+<% end %>

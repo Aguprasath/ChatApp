@@ -1,10 +1,10 @@
 <div>
-  <br><h5><%= "Conversation with #{@user2.username}" %></h5><br>
+  <br><h5><%= "Conversation with #{@other_user.username}" %></h5><br>
 
     <%= turbo_stream_from "messages" %>
     <div id="messages">
       <%@messages.each do |message| %>
-        <%=render message,locals={message: message} %>
+        <%=render message,locals={message: message,user1: current_user} %>
        <%end %>
     </div>
   <br>

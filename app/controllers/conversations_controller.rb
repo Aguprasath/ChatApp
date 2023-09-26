@@ -1,51 +1,33 @@
 class ConversationsController < ApplicationController
-  before_action :set_user2 if @user2.nil?
-  before_action :set_conversation, only: %i[show edit update destroy]
+  before_action :set_other_user
 
   def index
-    @conversations=Conversation.where('(user1_id = :user_id AND user2_id = :current_user_id) OR (user1_id = :current_user_id AND user2_id = :user_id)', user_id: @user2.id, current_user_id: current_user.id)
+    @conversations=Conversation.where('(user1_id = :other_user_id AND user2_id = :current_user_id) OR (user1_id = :current_user_id AND user2_id = :other_user_id)', other_user_id: @other_user.id, current_user_id: current_user.id)
   end
   def new
-    @conversation=current_user.conversations_as_user1.new
+    @conversation=current_user.conversations_as_current_user.new
   end
-  def show
 
-  end
-  def edit
-
-  end
   def create
-    @conversation=current_user.conversations_as_user1.create(conversation_params)
-    @conversation.user2_id=@user2.id
+    @conversation=current_user.conversations_as_current_user.create(conversation_params)
+    @conversation.user2_id=@other_user.id
 
       if @conversation.save
-          redirect_to user_conversations_path
+        Turbo::Streams::ActionBroadcastJob.perform_later("conversations",action: :append, target: "conversations", partial: "conversations/conversation",  locals: { conversation: @conversation,user: current_user })
+        redirect_to user_conversation_messages_path(@other_user,@conversation)
       else
          render :new
       end
  end
 
-  def update
 
-    if @conversation.update(conversation_params)
-      redirect_to user_conversations_path
-    else
-      render :edit
-    end
-
-  end
-  def destroy
-
-  end
   private
-  def set_conversation
-    @conversation=Conversation.find(params[:id])
-  end
+
   def conversation_params
     params.require(:conversation).permit(:user,:title)
   end
-  def set_user2
-    @user2=User.find(params[:user_id])
+  def set_other_user
+     @other_user=User.find(params[:user_id])
   end
 
 end
