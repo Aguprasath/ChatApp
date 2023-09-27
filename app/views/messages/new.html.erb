@@ -1,6 +1,6 @@
-<%=turbo_frame_tag "new-message" do %>
-
+<%= turbo_frame_tag "new_message_form" do %>
   <div>
-    <h5>New Message :</h5><%=render 'form',user:@user2,conversation: @conversation,message:@message %>
+    <h5>New Message :</h5>
+    <%=render 'form',user:@other_user,conversation: @message.conversation_id,message:@message %>
   </div>
   <%end %>

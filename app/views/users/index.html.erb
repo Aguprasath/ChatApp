@@ -1,4 +1,6 @@
-
+<div class="container-fluid"><br>
+    <h4><%= "Welcome, #{current_user.username} ... !"%></h4>
+  </div>
 <div class="container-fluid"><br>
   <h5>List of Users</h5>
   <%=turbo_stream_from "users" %>

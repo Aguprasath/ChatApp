@@ -2,9 +2,7 @@
 <%= turbo_frame_tag conversation do %>
   <div>
     <strong> Conversation title : </strong>
-    <%= conversation.title %>
-
-    <%=link_to 'show Messages',user_conversation_messages_path(user, conversation),class:'btn btn-primary', data: { turbo_frame: "_top" } %><br>
+    <%=link_to "#{conversation.title}",user_conversation_messages_path(user, conversation),class:'btn btn-primary', data: { turbo_frame: "_top" } %><br>
   </div>
 
 <%end %>

@@ -3,4 +3,5 @@ class Conversation < ApplicationRecord
   belongs_to :user2, class_name: 'User', foreign_key: 'user2_id'
   has_many :messages,dependent: :destroy
 
+  validates :title,presence: true
 end

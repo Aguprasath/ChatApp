@@ -1,6 +1,10 @@
 
 <%= form_with(model: [@other_user, @conversation], class: "form") do |form| %>
-
+  <% if @conversation.errors.any? %>
+    <div class="alert alert-danger">
+      <%= @conversation.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
   <div class="form-group">
     <%= form.text_field :title, class: "form-control",placeholder:"Enter conversation title" %>
   </div><br>

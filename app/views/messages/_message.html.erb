@@ -4,7 +4,9 @@
         <strong><%= "#{message.user.username} :" %> </strong>
 
          <%= message.body %>
+         <%=link_to 'edit',edit_user_conversation_message_path(message.user,message.conversation,message) %>
+         <%=link_to 'delete',user_conversation_message_path(message.user,message.conversation,message),method: :delete %>
 
-         </div>
+    </div>
   <%end %>
 </div>

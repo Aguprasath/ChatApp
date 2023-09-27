@@ -16,10 +16,13 @@ class ConversationsController < ApplicationController
         Turbo::Streams::ActionBroadcastJob.perform_later("conversations",action: :append, target: "conversations", partial: "conversations/conversation",  locals: { conversation: @conversation,user: current_user })
         redirect_to user_conversation_messages_path(@other_user,@conversation)
       else
-         render :new
+         render :new, status: :unprocessable_entity
       end
  end
 
+  def search
+    @searched_conversations=Conversation.where('title like ? ',"%#{params[:title]}%")
+  end
 
   private
 

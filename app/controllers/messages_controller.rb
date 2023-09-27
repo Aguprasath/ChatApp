@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
     @message=@conversation.messages.new
   end
   def new
-
+    @message=Message.new
   end
   def edit
 
@@ -24,33 +24,28 @@ class MessagesController < ApplicationController
     respond_to do |format|
       if @message.save
         format.turbo_stream do
-          Turbo::Streams::ActionBroadcastJob.perform_later("messages",action: :append, target: "messages", partial: "messages/message",  locals: { message: @message })
-
-        end
-        #format.html redirect_to user_conversation_messages_path(@user2,@conversation)
+           Turbo::Streams::ActionBroadcastJob.perform_later("messages",action: :append, target: "messages", partial: "messages/message",  locals: { message: @message })
+          end
       else
-        format.turbo_stream
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@message, partial: "messages/form", locals: { message: @message }) }
       end
     end
   end
   def update
-    respond_to do |format|
-      if  @message.update(message_params)
-        format.turbo_stream
-      else
-        format.html render :edit
+      respond_to do |format|
+      if  !@message.update(message_params)
+        format.turbo_stream do
+           turbo_stream.delete(@message)
+           end
       end
     end
   end
 
   def destroy
-    if @message.destroy
-      respond_to do |format|
-        format.turbo_stream
-      end
-    else
+    if !@message.destroy
       redirect_to user_conversation_messages_path
     end
+
   end
   private
   def message_params
