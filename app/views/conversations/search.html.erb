@@ -1,0 +1,16 @@
+
+<div class="container-fluid"><br>
+  <%if @searched_conversations.present? %>
+    <h5> Conversations by your search </h5><br>
+    <%@searched_conversations.each do |conversation| %>
+
+      <%=render conversation,locals={user: @other_user,conversation: conversation} %><br>
+    <% end %>
+  <%else %>
+    <div>
+     <h5>  <%= "No Conversations Found " %> </h5>
+    </div>
+
+  <%end%><br>
+  <%=link_to "Back to Conversations",user_conversations_path,class: "btn btn-primary" %>
+</div>
