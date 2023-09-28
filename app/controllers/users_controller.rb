@@ -1,11 +1,14 @@
-class UsersController < ApplicationController
+# frozen_string_literal: true
 
+class UsersController < ApplicationController
   def index
     @users = User.all
   end
 
   def search
-    @searched_users = User.search_users(params[:username], current_user.id)
+    unless params[:username].empty?
+      @searched_users = User.search_users(params[:username], current_user.id)
+    end
   end
 
   private
@@ -13,5 +16,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:username)
   end
-
 end

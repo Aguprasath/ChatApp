@@ -15,9 +15,6 @@ Rails.application.routes.draw do
       resources :messages
     end
   end
-  # get '/search_user', to: 'users#search_user'
-
-
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

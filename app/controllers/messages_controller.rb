@@ -11,9 +11,7 @@ class MessagesController < ApplicationController
     @message = @conversation.messages.new
   end
 
-  def new
-    @message = Message.new
-  end
+
 
   def edit; end
 
@@ -34,7 +32,7 @@ class MessagesController < ApplicationController
     respond_to do |format|
       unless @message.update(message_params)
         format.turbo_stream do
-          respond_to user_conversation_messages_path
+          format.turbo_stream { render turbo_stream: turbo_stream.replace(@message, partial: 'messages/form') }
         end
       end
     end

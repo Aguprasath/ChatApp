@@ -9,15 +9,11 @@
     </div>
   <br>
   <div>
-
     <%= turbo_frame_tag "new_message_form" do %>
       <%=render 'messages/form',locals={message: Message.new} %>
     <%end %>
 
   </div>
-
-
-
   <br>
   <%=link_to 'Back',user_conversations_path ,class: "btn btn-primary"%>
 </div>
