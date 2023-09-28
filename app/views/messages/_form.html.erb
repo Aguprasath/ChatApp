@@ -1,4 +1,4 @@
-<%= form_with(model: [@other_user, @conversation,@message], class: "form") do |form| %>
+<%= form_with(model: [@other_user, @conversation,@message],remote: true, class: "form",data:{ controller: 'reset-form', action: "turbo:submit-end->reset-form#reset"}) do |form| %>
 
 
   <%= form.text_field :body,placeholder:"type your message here.."%>

@@ -1,63 +1,66 @@
+# frozen_string_literal: true
+
 class MessagesController < ApplicationController
   before_action :set_conversation
   before_action :set_other_user
-  before_action :set_message,only: %i[show edit update destroy]
+  before_action :set_message, only: %i[show edit update destroy]
 
 
   def index
-    @messages=@conversation.messages.eager_load(:user).all
-    @message=@conversation.messages.new
+    @messages = @conversation.messages.eager_load(:user).all
+    @message = @conversation.messages.new
   end
+
   def new
-    @message=Message.new
+    @message = Message.new
   end
-  def edit
 
-  end
-  def show
+  def edit; end
 
-  end
   def create
-    @message=@conversation.messages.create(message_params)
-    @message.user_id=current_user.id
+    @message = @conversation.messages.create(message_params)
+    @message.user_id = current_user.id
 
     respond_to do |format|
       if @message.save
-        format.turbo_stream do
-           Turbo::Streams::ActionBroadcastJob.perform_later("messages",action: :append, target: "messages", partial: "messages/message",  locals: { message: @message })
-          end
+        format.turbo_stream
       else
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@message, partial: "messages/form", locals: { message: @message }) }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@message, partial: 'messages/form') }
       end
     end
   end
+
   def update
-      respond_to do |format|
-      if  !@message.update(message_params)
+    respond_to do |format|
+      unless @message.update(message_params)
         format.turbo_stream do
-           turbo_stream.delete(@message)
-           end
+          respond_to user_conversation_messages_path
+        end
       end
     end
   end
 
   def destroy
-    if !@message.destroy
-      redirect_to user_conversation_messages_path
-    end
+    return if @message.destroy
 
+    redirect_to user_conversation_messages_path
   end
+
   private
+
   def message_params
-    params.require(:message).permit(:body,:user_id,:conversation_id)
+    params.require(:message).permit(:body, :user_id, :conversation_id)
   end
+
   def set_conversation
-    @conversation=Conversation.find(params[:conversation_id])
+    @conversation = Conversation.find(params[:conversation_id])
   end
+
   def set_other_user
-    @other_user=User.find(params[:user_id])
+    @other_user = User.find(params[:user_id])
   end
+
   def set_message
-    @message=Message.find(params[:id])
+    @message = Message.find(params[:id])
   end
 end

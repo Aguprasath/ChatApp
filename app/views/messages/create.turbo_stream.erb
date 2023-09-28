@@ -1,2 +1,2 @@
-<%@message=Message.new%>
-<%= turbo_stream.replace("new_message_form", partial: 'form', locals: { message: @message }) %>
+<%Turbo::Streams::ActionBroadcastJob.perform_later('messages', action: :append, target: 'messages', partial: 'messages/message',  locals: { message: @message })
+%>

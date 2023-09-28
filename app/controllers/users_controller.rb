@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
 
   def index
-    @users=User.all
+    @users = User.all
   end
+
   def search
-    if(params[:username].present?)
-      @searched_users=User.where("(username like ? or email like ? ) and id!=?","%#{(params[:username]).strip}%","%#{(params[:username]).strip}%",current_user.id)
-    end
-    end
+    @searched_users = User.search_users(params[:username], current_user.id)
+  end
+
   private
 
   def user_params

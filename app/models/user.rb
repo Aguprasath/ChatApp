@@ -8,4 +8,6 @@ class User < ApplicationRecord
 
   broadcasts_to ->(user) { "users" }, inserts_by: :append
 
+  scope :search_users, ->(search_term, current_user_id) { where("(username LIKE ? OR email LIKE ?) AND id != ?", "%#{search_term}%", "%#{search_term}%", current_user_id) if search_term.present? }
+
 end
