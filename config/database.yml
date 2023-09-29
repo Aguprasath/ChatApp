@@ -86,6 +86,5 @@ production:
   <<: *default
   database: ChatApp_production
   username: postgres
-  password: agu@3005
-  secret_key_base: 66919470c95f32a691536e7dcaafd29d4f306d7d6df07ab1b3aa72665b565671b83a5fd6d9212b12908292f532daaa5903dd61b51b7bfe4bc65a55fa63ce51fb
-
+  password: <%= ENV['MYSITE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
